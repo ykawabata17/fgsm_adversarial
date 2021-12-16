@@ -46,6 +46,8 @@ model.fit(trainX, trainY,
     batch_size=64,
     epochs=5,
     verbose=1)
+
+model.save('simple_model.h5')
  
 # make predictions on the testing set for the model trained on
 # non-adversarial images
@@ -94,5 +96,6 @@ for i in np.random.choice(np.arange(0, len(testX)), size=(10,)):
     # stack the two images horizontally and then show the original
     # image and adversarial image
     output = np.hstack([image, adversary])
-    cv2.imshow("FGSM Adversarial Images", output)
-    cv2.waitKey(0)
+    cv2.imwrite('adversarial_examples/{}.jpg'.format(i), output)
+    # cv2.imshow("FGSM Adversarial Images", output)
+    # cv2.waitKey(0)
