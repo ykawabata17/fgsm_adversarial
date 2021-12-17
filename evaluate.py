@@ -5,8 +5,8 @@ import cv2
 import numpy as np
 import re
 
-model = load_model('simple_model.h5')
-files = glob.glob("eps_0.10/*.jpg")
+model = load_model('10000.h5')
+files = glob.glob("eps_0.15/*.jpg")
 
 test_img = []
 test_label = []
