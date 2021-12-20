@@ -5,8 +5,8 @@ import cv2
 import numpy as np
 import re
 
-model = load_model('10000.h5')
-files = glob.glob("eps_0.15/*.jpg")
+model = load_model('models/model_6.h5')
+files = glob.glob("sample_2/*.jpg")
 
 test_img = []
 test_label = []
@@ -15,7 +15,7 @@ for file in files:
     img = cv2.imread(file, cv2.IMREAD_GRAYSCALE)
     test_img.append(img)
     num = re.sub(r"\D", "", file)
-    test_label.append(num[3])
+    test_label.append(num[1])
 
 test_img = np.array(test_img).astype('float32') / 255
 test_img = test_img.reshape(len(test_img),28,28,1)

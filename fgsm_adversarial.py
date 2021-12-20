@@ -11,14 +11,13 @@ import cv2
 import sys
 
 # load MNIST dataset and scale the pixel values to the range [0, 1]
-print("[INFO] loading MNIST dataset...")
 (trainX, trainY), (testX, testY) = mnist.load_data()
 
 trainX = trainX / 255.0
 testX = testX / 255.0
 
-trainX = trainX[:10000]
-trainY = trainY[:10000]
+trainX = trainX[10000:20000]
+trainY = trainY[10000:20000]
 
 # add a channel dimension to the images
 trainX = np.expand_dims(trainX, axis=-1)
@@ -27,23 +26,21 @@ testX = np.expand_dims(testX, axis=-1)
 trainY = to_categorical(trainY, 10)
 testY = to_categorical(testY, 10)
 
-# initialize our optimizer and model
-print("[INFO] compiling model...")
+""" # initialize our optimizer and model
 opt = Adam(lr=1e-3)
 model = ComplexCNN.build()
 model.compile(loss="categorical_crossentropy", optimizer=opt,
     metrics=["accuracy"])
 # train the simple CNN on MNIST
-print("[INFO] training network...")
 model.fit(trainX, trainY,
     validation_data=(testX, testY),
     batch_size=64,
     epochs=10,
     verbose=1)
 
-model.save('10000.h5')
+model.save('models/10000_20000.h5') """
 
-# model = load_model('10000.h5')
+model = load_model('models/10000_20000.h5')
  
 # make predictions on the testing set for the model trained on
 # non-adversarial images
@@ -74,7 +71,7 @@ for eps in epsilons:
         # if imagePred == adversaryPred:
         #     pass
         
-        cv2.imwrite('eps_0.15/{}_{}_{}.jpg'.format(imagePred, adversaryPred,i), adversary)
+        cv2.imwrite('sample_10000_20000/{}_{}_{}.jpg'.format(imagePred, adversaryPred,i), adversary)
         
-        if i == 3001:
+        if i == 3000:
             break
