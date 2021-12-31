@@ -40,7 +40,7 @@ def model_create(img_file, origin, noise):
     
     trainX = np.append(trainX_org[origin:10000+origin], trainX_noise[:noise])
     trainY = np.append(trainY_org[origin:10000+origin], trainY_noise[:noise])
-    trainX = trainX.reshape(origin+noise, 28, 28, 1)
+    trainX = trainX.reshape(15000, 28, 28, 1)
     
     random = np.arange(len(trainX))
     np.random.shuffle(random)
@@ -62,7 +62,7 @@ def model_create(img_file, origin, noise):
     model.save('models/org{}_noise{}.h5'.format(origin, noise))
 
 def main():
-    model_create(img_file="sample_2", origin=10000, noise=3000)
+    model_create(img_file="sample_1", origin=30000, noise=5000)
     
 if __name__=="__main__":
     main()

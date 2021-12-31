@@ -15,8 +15,8 @@ print("[INFO] loading MNIST dataset...")
 trainX = trainX / 255.0
 testX = testX / 255.0
 
-trainX = trainX[:10000]
-trainY = trainY[:10000]
+trainX = trainX[30000:40001]
+trainY = trainY[30000:40001]
 
 # add a channel dimension to the images
 trainX = np.expand_dims(trainX, axis=-1)
@@ -39,4 +39,4 @@ model.fit(trainX, trainY,
     epochs=10,
     verbose=1)
 
-model.save('10000.h5')
+model.save('30000_40000.h5')

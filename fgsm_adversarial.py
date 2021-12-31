@@ -16,9 +16,6 @@ import sys
 trainX = trainX / 255.0
 testX = testX / 255.0
 
-trainX = trainX[10000:20000]
-trainY = trainY[10000:20000]
-
 # add a channel dimension to the images
 trainX = np.expand_dims(trainX, axis=-1)
 testX = np.expand_dims(testX, axis=-1)
@@ -26,21 +23,7 @@ testX = np.expand_dims(testX, axis=-1)
 trainY = to_categorical(trainY, 10)
 testY = to_categorical(testY, 10)
 
-""" # initialize our optimizer and model
-opt = Adam(lr=1e-3)
-model = ComplexCNN.build()
-model.compile(loss="categorical_crossentropy", optimizer=opt,
-    metrics=["accuracy"])
-# train the simple CNN on MNIST
-model.fit(trainX, trainY,
-    validation_data=(testX, testY),
-    batch_size=64,
-    epochs=10,
-    verbose=1)
-
-model.save('models/10000_20000.h5') """
-
-model = load_model('models/10000_20000.h5')
+model = load_model('models/30000_40000.h5')
  
 # make predictions on the testing set for the model trained on
 # non-adversarial images
@@ -50,10 +33,10 @@ print("[INFO] loss: {:.4f}, acc: {:.4f}".format(loss, acc))
 # loop over a sample of our testing images
 epsilons = [0.15]
 for eps in epsilons:
-    for i in range(len(testX)):
+    for i in range(45001, len(trainX)):
         # grab the current image and label
-        image = testX[i]
-        label = testY[i]
+        image = trainX[i]
+        label = trainY[i]
         # generate an image adversary for the current image and make
         # a prediction on the adversary
         adversary = generate_image_adversary(model,
@@ -71,7 +54,7 @@ for eps in epsilons:
         # if imagePred == adversaryPred:
         #     pass
         
-        cv2.imwrite('sample_10000_20000/{}_{}_{}.jpg'.format(imagePred, adversaryPred,i), adversary)
+        cv2.imwrite('sample_2/{}_{}_{}.jpg'.format(imagePred, adversaryPred,i), adversary)
         
-        if i == 3000:
+        if i == 50000:
             break
